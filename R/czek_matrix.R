@@ -1,15 +1,15 @@
-#'@title Preprocess data to produce a Czekanowski’s Diagram
-#'@description This is a function that divied the values insied a distance matrix into classes. The output can be used in the plot function to producce a Czekanowski’s Diagram.
+#'@title Preprocess data to produce a Czekanowski’s Diagram.
+#'@description This is a function that divided the values inside a distance matrix into classes. The output can be used in the plot function to produce a Czekanowski’s Diagram.
 #'@param x  a numeric matrix, data frame or a 'dist' object.
-#'@param order specifies which seriation method should be applied. Standard setting is the seriation method OLO.
-#'@param n_classes specifies how many classes the distances should be divided into. Standard setting is 5 classes.
+#'@param order specifies which seriation method should be applied. The standard setting is the seriation method OLO.
+#'@param n_classes specifies how many classes the distances should be divided into. The standard setting is 5 classes.
 #'@param interval_breaks specifies the partition boundaries for the distances. As a standard setting, each class represents an equal amount of distances.
-#'@param monitor  specifies if the distribution of the distances should be visualized. Standard setting is that the distribution will not be visualized. TRUE and "cumulativ_plot" is available.
+#'@param monitor specifies if the distribution of the distances should be visualized. The standard setting is that the distribution will not be visualized. TRUE and "cumulativ_plot" is available.
 #'@param distfun specifies which distance function should be used. Standard setting is the dist function which uses the Euclidean distance.
-#'@param scale_data specifies if the data set should be scaled. Standard setting is thatthe data will be scaled.
-#'@param ... specifies further parameters that can be passed on to the seriatefunction in the seriation package.
+#'@param scale_data specifies if the data set should be scaled. The standard setting is that the data will be scaled.
+#'@param ... specifies further parameters that can be passed on to the seriate function in the seriation package.
 #'@export
-#'@return The function return a matrix with class czek_matrix. The return from the function is expected to be passed to the plot function.
+#'@return The function returns a matrix with class czek_matrix. The return from the function is expected to be passed to the plot function.
 #'@examples
 #'# Set data ####
 #'x<-mtcars

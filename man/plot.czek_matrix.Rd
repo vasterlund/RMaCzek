@@ -12,29 +12,29 @@
 \arguments{
 \item{x}{a matrix with class czek_matrix.}
 
-\item{values}{specifies the colour or the size of the symbols in the graph. Standard setting is grey scale for a colour graph and a vector with the values 2,1,0.5,0.25 and 0 for a graph with symbols.}
+\item{values}{specifies the color or the size of the symbols in the graph. The standard setting is a grey scale for a color graph and a vector with the values 2,1,0.5,0.25 and 0 for a graph with symbols.}
 
-\item{type}{specifies if the graph should use colour or symbols. Standard setting is symbols.}
+\item{type}{specifies if the graph should use color or symbols. The standard setting is symbols.}
 
-\item{plot_pch}{specifies which symbols the graph should use. Standard setting is 19, which is a black circle.}
+\item{plot_pch}{specifies which symbols the graph should use. The standard setting is 19, which is a black circle.}
 
-\item{plot_cex}{specifies the size of the cells in a colour graph. Standard setting is 1.5.}
+\item{plot_cex}{specifies the size of the cells in a color graph. The standard setting is 1.5.}
 
-\item{label.cex}{specifies the size of the labels for the objects. Standard setting is 0.6.}
+\item{label.cex}{specifies the size of the labels for the objects. The standard setting is 0.6.}
 
 \item{plot_title}{specifies the main title in the graph.}
 
-\item{legend}{specifies if a legend should be included or not. Standard setting is that the legend is not included.}
+\item{legend}{specifies if a legend should be included or not. The standard setting is that the legend will not be included.}
 
-\item{axis}{specifies if the labels for the objects should be included. Standard setting is that the labels are included.}
+\item{axis}{specifies if the labels for the objects should be included. The standard setting is that the labels are included.}
 
-\item{...}{specifies further parameters that can be passed on to the seriatefunction in the seriation package.}
+\item{...}{specifies further parameters that can be passed on to the seriate function in the seriation package.}
 }
 \value{
-The function return a Czekanowski’s Diagram.
+The function returns a Czekanowski’s Diagram.
 }
 \description{
-This is a function that can producce a Czekanowski’s Diagram.
+This is a function that can produce a Czekanowski’s Diagram.
 }
 \examples{
 # Set data ####

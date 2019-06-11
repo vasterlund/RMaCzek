@@ -1,6 +1,6 @@
 seriate_ga <- function(x, control= list(fitness = RMaCzek::Um_factor,
                                         population =GA::gaControl("permutation")$population,
-                                        suggestions = c("QAP2SUM"),
+                                        suggestions = c("QAP_2SUM"),
                                         selection = GA::gaControl("permutation")$selection,
                                         crossover = GA::gaControl("permutation")$crossover,
                                         mutation = GA::gaControl("permutation")$mutation,

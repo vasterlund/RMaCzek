@@ -2,7 +2,7 @@
 % Please edit documentation in R/czek_matrix.R
 \name{czek_matrix}
 \alias{czek_matrix}
-\title{Preprocess data to produce a Czekanowski’s Diagram}
+\title{Preprocess data to produce a Czekanowski’s Diagram.}
 \usage{
 czek_matrix(x, order = "OLO", n_classes = 5, interval_breaks = NULL,
   monitor = FALSE, distfun = dist, scale_data = TRUE, ...)
@@ -10,25 +10,25 @@ czek_matrix(x, order = "OLO", n_classes = 5, interval_breaks = NULL,
 \arguments{
 \item{x}{a numeric matrix, data frame or a 'dist' object.}
 
-\item{order}{specifies which seriation method should be applied. Standard setting is the seriation method OLO.}
+\item{order}{specifies which seriation method should be applied. The standard setting is the seriation method OLO.}
 
-\item{n_classes}{specifies how many classes the distances should be divided into. Standard setting is 5 classes.}
+\item{n_classes}{specifies how many classes the distances should be divided into. The standard setting is 5 classes.}
 
 \item{interval_breaks}{specifies the partition boundaries for the distances. As a standard setting, each class represents an equal amount of distances.}
 
-\item{monitor}{specifies if the distribution of the distances should be visualized. Standard setting is that the distribution will not be visualized. TRUE and "cumulativ_plot" is available.}
+\item{monitor}{specifies if the distribution of the distances should be visualized. The standard setting is that the distribution will not be visualized. TRUE and "cumulativ_plot" is available.}
 
 \item{distfun}{specifies which distance function should be used. Standard setting is the dist function which uses the Euclidean distance.}
 
-\item{scale_data}{specifies if the data set should be scaled. Standard setting is thatthe data will be scaled.}
+\item{scale_data}{specifies if the data set should be scaled. The standard setting is that the data will be scaled.}
 
-\item{...}{specifies further parameters that can be passed on to the seriatefunction in the seriation package.}
+\item{...}{specifies further parameters that can be passed on to the seriate function in the seriation package.}
 }
 \value{
-The function return a matrix with class czek_matrix. The return from the function is expected to be passed to the plot function.
+The function returns a matrix with class czek_matrix. The return from the function is expected to be passed to the plot function.
 }
 \description{
-This is a function that divied the values insied a distance matrix into classes. The output can be used in the plot function to producce a Czekanowski’s Diagram.
+This is a function that divided the values inside a distance matrix into classes. The output can be used in the plot function to produce a Czekanowski’s Diagram.
 }
 \examples{
 # Set data ####
