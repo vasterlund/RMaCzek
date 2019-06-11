@@ -1,27 +1,68 @@
-#'@title Divied a distance matrix into classes
-#'@description This is a function that divied the values insied a distance matrix into classes.
-#'@param x  a numeric matrix, data frame or "dist" object.
-#'@param order the order of the observations. If TRUE the seriation function with method=SPIN_STS is used, if FALSE the present order in the distance matrix is used, if a function the function is expected to return the order the user want to use.
-#'@param n_classes number of classes the distances should be divided into.
-#'@param sizes_cex if col=FALSE the user can specify the sizes of cex
-#'@param col if a vector with colour the classes will be expressed in colours, if TRUE standard colours will be used, if FALSE the matrix will be expressed in numbers
-#'@param interval_breaks if "equal_width_between_classes" equal width between classes will be used, the user can specify the partition boundaries. If interval_breaks is not specified, equal amount of distances is divided into every class.
-#'@param monitor  "plot" and "cumulativ_plot" is available.
-#'@param dist_function a user defined distance function. If not specified the dist function will be used.
-#'@param scale_data if the data should be scaled or not.
-#'@param ... parameters to be passed into the dist or dist_function function.
+#'@title Preprocess data to produce a Czekanowski’s Diagram
+#'@description This is a function that divied the values insied a distance matrix into classes. The output can be used in the plot function to producce a Czekanowski’s Diagram.
+#'@param x  a numeric matrix, data frame or a 'dist' object.
+#'@param order specifies which seriation method should be applied. Standard setting is the seriation method OLO.
+#'@param n_classes specifies how many classes the distances should be divided into. Standard setting is 5 classes.
+#'@param interval_breaks specifies the partition boundaries for the distances. As a standard setting, each class represents an equal amount of distances.
+#'@param monitor  specifies if the distribution of the distances should be visualized. Standard setting is that the distribution will not be visualized. TRUE and "cumulativ_plot" is available.
+#'@param distfun specifies which distance function should be used. Standard setting is the dist function which uses the Euclidean distance.
+#'@param scale_data specifies if the data set should be scaled. Standard setting is thatthe data will be scaled.
+#'@param ... specifies further parameters that can be passed on to the seriatefunction in the seriation package.
 #'@export
-#'@return The function return a matrix with class czek_matrix. The return from the function is expected to be passed to the Czekanowski_plot function.
+#'@return The function return a matrix with class czek_matrix. The return from the function is expected to be passed to the plot function.
+#'@examples
+#'# Set data ####
+#'x<-mtcars
+#'
+#'
+#'# Different type of input that give same result ############
+#'czek_matrix(x)
+#'czek_matrix(dist(scale(x)))
+#'
+#'
+#'# Change seriation method ############
+#'#seriation::show_seriation_methods("dist")
+#'czek_matrix(x,order = "GW")
+#'czek_matrix(x,order = "ga")
+#'czek_matrix(x,order = sample(1:nrow(x)))
+#'
+#'
+#'# Change number of classes ############
+#'czek_matrix(x,n_classes = 3)
+#'
+#'
+#'# Change the partition boundaries ############
+#'czek_matrix(x,interval_breaks = c(0.1,0.4,0.5)) #10%, 40% and 50%
+#'czek_matrix(x,interval_breaks = c(0,1,4,6,8.48)) #[0,1] (1,4] (4,6] (6,8.48]
+#'czek_matrix(x,interval_breaks = "equal_width_between_classes") #[0,1.7] (1.7,3.39]  (3.39,5.09] (5.09,6.78] (6.78,8.48]
+#'
+#'
+#'# Change number of classes ############
+#'czek_matrix(x,monitor = TRUE)
+#'czek_matrix(x,monitor = "cumulativ_plot")
+#'
+#'
+#'# Change distance function ############
+#'czek_matrix(x,distfun = function(x) dist(x,method = "manhattan"))
+#'
+#'
+#'# Change dont scale the data ############
+#'czek_matrix(x,scale_data = FALSE)
+#'czek_matrix(dist(x))
+#'
+#'
+#'# Change additinal settings to the seriation method ############
+#'czek_matrix(x,order="ga",control=list(popSize=200,
+#'                                      suggestions=c("SPIN_STS","QAP_2SUM")))
 
 
 czek_matrix <- function(x,
-                        order=TRUE,
+                        order="OLO",
                         n_classes = 5,
                         interval_breaks=NULL,
-                        monitor="plot",
+                        monitor=FALSE,
                         distfun=dist,
                         scale_data=TRUE,
-                        control_ga=list(),
                         ...){
 
   # If not of class dist, make the data to class dist ####
@@ -33,7 +74,7 @@ czek_matrix <- function(x,
     }
 
     # Calculate a distance matrix
-    x<-distfun(x,...)
+    x<-distfun(x)
 
   }
 
@@ -46,17 +87,24 @@ czek_matrix <- function(x,
     new_order<-order
   }
 
-  # If standard settings is used
-  else if (order[1]==TRUE | order[1]=="ga"){
-    new_order<-seriate_ga(x,control_ga)
-  }
+
 
   # If standard settings is used
   else if (class(order[1])=="character"){
-    new_order<-seriation::get_order(seriation::seriate(x,method=order))
+
+
+
+    if (!.installed("seriation"))
+      stop("Package 'seriation' needs to be installed!")
+
+    # If standard settings is used
+    if (order[1]=="ga"){
+      register_seriate_ga()
+      order<-"seriate_ga"
+    }
+
+    new_order<-seriation::get_order(seriation::seriate(x,method=order[1],...))
   }
-
-
 
 
   # If the user dont want to change the order
@@ -132,7 +180,10 @@ czek_matrix <- function(x,
 
 
   # Monitor ####
-  if(monitor%in%c("plot","cumulativ_plot")){
+  if(monitor%in%c(TRUE,"cumulativ_plot")){
+
+    if(monitor==TRUE)
+      monitor<-"plot"
 
     cum_probs<-as.numeric(gsub(pattern = "%",replacement = "",x = names(interval_breaks)))
     plot_values<-cum_probs[-1]

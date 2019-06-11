@@ -1,12 +1,74 @@
+#'@title Produce a Czekanowski’s Diagram
+#'@description This is a function that can producce a Czekanowski’s Diagram.
+#'@param x  a matrix with class czek_matrix.
+#'@param type specifies if the graph should use colour or symbols. Standard setting is symbols.
+#'@param values specifies the colour or the size of the symbols in the graph. Standard setting is grey scale for a colour graph and a vector with the values 2,1,0.5,0.25 and 0 for a graph with symbols.
+#'@param plot_pch specifies which symbols the graph should use. Standard setting is 19, which is a black circle.
+#'@param plot_cex specifies the size of the cells in a colour graph. Standard setting is 1.5.
+#'@param label.cex specifies the size of the labels for the objects. Standard setting is 0.6.
+#'@param plot_title specifies the main title in the graph.
+#'@param legend specifies if a legend should be included or not. Standard setting is that the legend is not included.
+#'@param axis specifies if the labels for the objects should be included. Standard setting is that the labels are included.
+#'@param ... specifies further parameters that can be passed on to the seriatefunction in the seriation package.
+#'@export
+#'@return The function return a Czekanowski’s Diagram.
+#'@examples
+#'# Set data ####
+#'x<-czek_matrix(mtcars)
+#'
+#'
+#'# Standard plot ############
+#'plot(x)
+#'plot.czek_matrix(x)
+#'
+#'
+#'# Specify values ############
+#'plot(x,values=c(1.5,1,0.75,0.25,0 ))
+#'plot(x,values=grDevices::colorRampPalette(c("black","red","white"))(5))
+#'
+#'
+#'# Specify type ############
+#'plot(x,type = "symbols")
+#'plot(x,type = "col")
+#'
+#'
+#'# Specify plot_pch ############
+#'plot(x,plot_pch = 15)
+#'
+#'
+#'# Specify plot_cex ############
+#'plot(x,type="col",plot_cex = 1)
+#'
+#'
+#'# Specify plot_cex ############
+#'plot(x,label.cex = 0.45)
+#'
+#'
+#'# Specify the main title ############
+#'plot(x,plot_title = "Czekanowski’s Diagram of mtcars")
+#'
+#'
+#'# Add legend ############
+#'plot(x,legend = TRUE)
+#'
+#'
+#'# Remove axis name ############
+#'plot(x,axis = FALSE)
+#'
+#'
+#'# Change additinal settings to the plot function ############
+#'plot(x,col.main="blue",font.main=9,cex.main=2)
+
+
 plot.czek_matrix<-function(x,
                            values=NULL,
-                           col=FALSE,
+                           type="symbols",
                            #size=NULL,
                            plot_pch = NULL,
                            plot_cex = 1.5,
                            label.cex = 0.6,
                            plot_title="Czekanowski's diagram",
-                           legend=TRUE,
+                           legend=FALSE,
                            axis=TRUE,
                            ...){
 
@@ -27,7 +89,7 @@ plot.czek_matrix<-function(x,
      length(values)==n_classes){
     values<-values
   }
-  else if (col==FALSE){
+  else if (type=="symbols"){
     values<-rep(0,n_classes)
     values[1]<-2
     for(i in 2:(n_classes-1)){
@@ -36,10 +98,12 @@ plot.czek_matrix<-function(x,
     values[n_classes]<-0
 
   }
-  else {
+  else if(type=="col") {
     values<-round(seq(0,100,length.out = n_classes))
     values<-paste("gray",values,sep="")
   }
+  else
+    stop("type should be either 'col' or 'symbols'")
 
 
   plot_values<- values[x]
@@ -77,21 +141,6 @@ plot.czek_matrix<-function(x,
 
     plot_cex<-plot_cex
     plot_col<-plot_values
-
-
-
-    # plot(x = plot_x,
-    #      y = plot_y,
-    #      col = plot_col,
-    #      pch = plot_pch,
-    #      cex = plot_cex,
-    #      axes = FALSE,
-    #      xlab = "",
-    #      ylab = "",
-    #      xlim = c(0.5, p + 0.5),
-    #      ylim = c(0.5, n + 0.5))
-
-
   }
 
 
@@ -125,7 +174,7 @@ plot.czek_matrix<-function(x,
        ylab = "",
        xlim = c(0.5, p + 0.5),
        ylim = c(0.5, n + 0.5),
-       main = plot_title)
+       main = plot_title,...)
 
 
 

@@ -1,4 +1,4 @@
-#'@title CzekanowskiPackage: A package that can produce Czekanowski's diagram
+#'@title RMaCzek: A package that can produce Czekanowski's diagram
 #'
 #'@description This package produce Czekanowski's diagram
 #'
@@ -13,7 +13,7 @@
 #'
 #'
 #'
-#' @name CzekanowskiPackage
+#' @name RMaCzek
 #' @docType package
 #' @author Albin Vasterlund
 NULL

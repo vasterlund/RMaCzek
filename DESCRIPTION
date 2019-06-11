@@ -1,7 +1,7 @@
-Package: CzekanowskiPackage
+Package: RMaCzek
 Type: Package
 Title: Czekanowski's Diagrams
-Version: 1.0.0
+Version: 0.1.0
 Author: Albin Vasterlund
 Maintainer: The package maintainer <abbe--93@hotmail.com>
 Description: RMaCzekis an R-package that can produce Czekanowski’s Diagrams.
